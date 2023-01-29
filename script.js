@@ -45,7 +45,7 @@
 
 
             for (const input of inputAll) {
-                inputsArray[input.id] = input.value;
+                inputsArray[input.name] = input.value;
             }
                 inputsArray;
             console.log(inputsArray)
@@ -210,7 +210,7 @@
            let userName = inputUserName.val();
            let userPassword = inputPassword.val();
 
-           let user1 = clientsArray.find(item => item.id === 'igorius');
+           let user1 = clientsArray.find(item => item.login === 'dfgdfgd');
             console.log(user1)
 
 
