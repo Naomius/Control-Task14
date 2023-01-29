@@ -37,7 +37,9 @@
     let submitBtn = document.querySelector('.btn');
     submitBtn.addEventListener('click', registration)
 
-            let out = '';
+    let inputAll = Array.from(document.querySelectorAll('#myForm input'));
+    let inputsArray = {};
+
     function registration() {
         const isValid = validateFormRegistration()
         if (isValid) {
@@ -87,9 +89,7 @@
     }
 
     let formFields = form.elements;
-    let inputsArray = {};
     let clientArray = [];
-    let inputAll = Array.from(document.querySelectorAll('#myForm input'));
 
     function validateFormRegistration() {
         $('.error').remove();
@@ -104,7 +104,7 @@
             inputFullName.css(styleSuccess.element, styleSuccess.style);
         }
 
-        if (!inputUserName.val().match(/^[A-Za-z\s]+$/)) {
+        if (!inputUserName.val().match(/^[A-Za-z0-9\s]+$/)) {
             inputUserName.after(returnTextError('Логин'));
             inputUserName.css(styleFail.element, styleFail.style);
             hasError = true;
@@ -206,20 +206,54 @@
 
             let clientsArray = localStorage.getItem('clients')
                 clientsArray = JSON.parse(clientsArray);
-            console.log(clientsArray)
            let userName = inputUserName.val();
            let userPassword = inputPassword.val();
+            console.log(userName)
+            console.log(userPassword)
 
-           let user1 = clientsArray.find(item => item.login === 'dfgdfgd');
-            console.log(user1)
+           let findUserLogin = clientsArray.find(item => {
+               if ( item.login === userName)
+                console.log(userName)
+               if (item.login !== userName) {
+                   inputUserName.after(loginTextError());
+                   inputUserName.css(styleFail.element, styleFail.style);
+               }
+           });
 
-
+            let findUserPass = clientsArray.find(item => {
+                if ( item.password === userPassword)
+                    console.log(userPassword)
+                if (item.password !== userPassword) {
+                    inputPassword.after(passTextError());
+                    inputPassword.css(styleFail.element, styleFail.style);
+                }
+            });
+            return successLogin();
         }
-        // if (!inputUserName.value || !inputPassword.value) {
-        //     alert('Заполните пустые поля!')
-        // } else {
-        //     alert('Добро пожаловать, ' + inputUserName.value + '!');
-        // }
+
+    }
+
+    function successLogin() {
+        let clientsArray = localStorage.getItem('clients');
+            clientsArray = JSON.parse(clientsArray);
+           let fullName = clientsArray[0].fullName;
+        document.getElementsByClassName('main-title')[0].innerHTML = `Welcome, ${fullName}!`;
+        submitBtn.innerText = 'Exit';
+        document.querySelector('.main-text').remove();
+        inputUserName.remove();
+        inputPassword.remove();
+        document.querySelector('.form-group').remove();
+        registrationBtn.remove()
+        document.querySelector('.btn').onclick = () => {
+            location.reload()
+        }
+    }
+
+    function loginTextError(fieldName) {
+        return `<div class="error">Пользователь не найден</div>`
+    }
+    function passTextError(fieldName) {
+        return `<div class="error">Неверный пароль</div>`
     }
 
 
