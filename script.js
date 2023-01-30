@@ -166,19 +166,21 @@
 
         function redirectToLogin() {
             $('.error').remove();
-        document.getElementsByClassName('main-title')[0].innerText = 'Log in to the system';
-        document.getElementById('inputFullName').remove();
-        document.getElementById('mailInput').remove();
-        document.getElementById('inputRepeatPassword').remove();
-        document.getElementsByClassName('checkLabel')[0].remove();
-        submitBtn.innerText = 'Sign In';
-        registrationBtn.textContent = 'Registration';
-        registrationBtn.style.cursor = 'pointer';
-        registrationBtn.style.textAlign = 'center';
-        btnHaveAccount.removeEventListener('click', redirectToLogin)
-        btnHaveAccount.onclick = () => {location.reload();}
-        submitBtn.removeEventListener('click', registration);
-        submitBtn.addEventListener('click', login);
+            document.querySelector('#input-name').style.borderBottom = '1px solid #C6C6C4'
+            document.querySelector('#input-password').style.borderBottom = '1px solid #C6C6C4'
+            document.getElementsByClassName('main-title')[0].innerText = 'Log in to the system';
+            document.getElementById('inputFullName').remove();
+            document.getElementById('mailInput').remove();
+            document.getElementById('inputRepeatPassword').remove();
+            document.getElementsByClassName('checkLabel')[0].remove();
+            submitBtn.innerText = 'Sign In';
+            registrationBtn.textContent = 'Registration';
+            registrationBtn.style.cursor = 'pointer';
+            registrationBtn.style.textAlign = 'center';
+            btnHaveAccount.removeEventListener('click', redirectToLogin)
+            btnHaveAccount.onclick = () => {location.reload();}
+            submitBtn.removeEventListener('click', registration);
+            submitBtn.addEventListener('click', login);
     }
 
 
@@ -243,7 +245,7 @@
         document.querySelector('.form-group').remove();
         registrationBtn.remove()
         document.querySelector('.btn').onclick = () => {
-            location.reload()
+            window.location.reload()
         }
     }
 
