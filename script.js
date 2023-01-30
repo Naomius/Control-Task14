@@ -8,9 +8,9 @@
     let inputRepeatPassword = $('#input-repeat-password');
     let inputCheck = $('#input-check');
     let checkedInput = $('.checked-text');
+    let client = {};
     let hasError = false;
-    // $('.error').remove();
-    // $('.errorChecked').remove();
+
 
 
 
@@ -208,39 +208,33 @@
         }
 
         if(!hasError) {
-            let clientsArray = localStorage.getItem('clients')
-                clientsArray = JSON.parse(clientsArray);
-           let userName = inputUserName.val();
-           let userPassword = inputPassword.val();
-            console.log(userName)
-            console.log(userPassword)
 
-           let findUserLogin = clientsArray.find(item => {
-               if ( item.login === userName)
-                console.log(userName)
-               if (item.login !== userName) {
-                   inputUserName.after(loginTextError());
-                   inputUserName.css(styleFail.element, styleFail.style);
-               }
-           });
+            let clients =  JSON.parse(localStorage.getItem('clients'));
 
-            let findUserPass = clientsArray.find(item => {
-                if ( item.password === userPassword)
-                    console.log(userPassword)
-                if (item.password !== userPassword) {
+            client = clients.find(client => client.login === inputUserName.val());
+
+            if (!client) {
+                inputUserName.after(loginTextError());
+                inputUserName.css(styleFail.element, styleFail.style);
+                return
+            } else {
+                if (client.password !== inputPassword.val()) {
                     inputPassword.after(passTextError());
                     inputPassword.css(styleFail.element, styleFail.style);
+                    return
                 }
-            });
+            }
+
             return successLogin();
         }
 
     }
 
     function successLogin() {
-        let clientsArray = localStorage.getItem('clients');
-            clientsArray = JSON.parse(clientsArray);
-           let fullName = clientsArray[0].fullName;
+        let fullName = '';
+            if (client.fullName) {
+                fullName = client.fullName;
+            }
         document.getElementsByClassName('main-title')[0].innerHTML = `Welcome, ${fullName}!`;
         submitBtn.innerText = 'Exit';
         document.querySelector('.main-text').remove();
