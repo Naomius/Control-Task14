@@ -81,6 +81,7 @@
         style: 'green'
     }
 
+
     function returnTextError(fieldName) {
         return `<div class="error">Необходимо ввести ${fieldName}</div>`
     }
@@ -125,7 +126,7 @@
             inputPassword.css(styleSuccess.element, styleSuccess.style);
         }
 
-        if (!inputRepeatPassword.val().match(/(?=.*[А-ЯA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+        if (!inputRepeatPassword.val()) {
             inputRepeatPassword.after(returnTextError('Повторно Пароль'));
             inputRepeatPassword.css(styleFail.element, styleFail.style);
             hasError = true;
@@ -134,6 +135,7 @@
         }
 
         if (inputPassword.val() !== inputRepeatPassword.val()) {
+
             inputRepeatPassword.after(returnTextError('Пароли не совпадают'));
             inputRepeatPassword.css(styleFail.element, styleFail.style);
             hasError = true;
@@ -146,6 +148,7 @@
         }
 
         if(!hasError) {
+
             return true
         }
 
@@ -162,6 +165,7 @@
         let registrationBtn = document.querySelector('.main-span');
 
         function redirectToLogin() {
+            $('.error').remove();
         document.getElementsByClassName('main-title')[0].innerText = 'Log in to the system';
         document.getElementById('inputFullName').remove();
         document.getElementById('mailInput').remove();
@@ -187,15 +191,15 @@
         $('.errorChecked').remove();
         hasError = false;
 
-        if (!inputUserName.val().match(/^[A-Za-z\s]+$/)) {
-            inputUserName.after(returnTextError('Логин'));
+        if (!inputUserName.val()) {
+            inputUserName.after(loginTextError('Логин'));
             inputUserName.css(styleFail.element, styleFail.style);
             hasError = true;
         } else {
             inputUserName.css(styleSuccess.element, styleSuccess.style);
         }
 
-        if (!inputPassword.val().match(/(?=.*[А-ЯA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+        if (!inputPassword.val()) {
             inputPassword.after(returnTextError('Пароль'));
             inputPassword.css(styleFail.element, styleFail.style);
             hasError = true;
@@ -250,7 +254,7 @@
     }
 
     function loginTextError(fieldName) {
-        return `<div class="error">Пользователь не найден</div>`
+        return `<div class="error">Такой пользователь не зарегистрирован</div>`
     }
     function passTextError(fieldName) {
         return `<div class="error">Неверный пароль</div>`
