@@ -9,12 +9,10 @@
     let inputCheck = $('#input-check');
     let checkedInput = $('.checked-text');
     let hasError = false;
-    $('.error').remove();
-    $('.errorChecked').remove();
-    //Пункт 2-3
+    // $('.error').remove();
+    // $('.errorChecked').remove();
 
-    let numbers = /[0-9]/g;
-    let punctuationMarks = /[,/.]/g
+
 
     // inputFullName.oninput = function () {
     //     this.value = this.value.replace(numbers, '');
@@ -23,7 +21,7 @@
     //     this.value = this.value.replace(punctuationMarks, '');
     // }
 
-    //Пункт 4
+
 
     inputCheck.onchange = (event) => {
         if (event.currentTarget.checked) {
@@ -33,7 +31,7 @@
         }
     }
 
-    //Пункт 5
+
     let submitBtn = document.querySelector('.btn');
     submitBtn.addEventListener('click', registration)
 
@@ -49,9 +47,8 @@
             for (const input of inputAll) {
                 inputsArray[input.name] = input.value;
             }
-                inputsArray;
-            console.log(inputsArray)
-            // inputsArray.push(out)
+
+
            let clients = localStorage.getItem('clients');
             if (clients) {
                 let clientsArray = JSON.parse(clients);
@@ -62,7 +59,7 @@
                 clientsArray.push(inputsArray);
                 localStorage.setItem('clients', JSON.stringify(clientsArray));
             }
-            console.log(localStorage)
+
         }
     }
 
@@ -96,7 +93,7 @@
         $('.errorChecked').remove();
         hasError = false;
 
-        if (!inputFullName.val().match(/^[А-ЯA-Zа-яa-z\s]+\s*$/)) {
+        if (!inputFullName.val().match(/^[А-ЯA-Zа-яa-z\s]+$/)) {
             inputFullName.after(returnTextError('Фамилию и Имя'));
             inputFullName.css(styleFail.element, styleFail.style)
             hasError = true;
@@ -110,7 +107,8 @@
             hasError = true;
         } else {
             inputUserName.css(styleSuccess.element, styleSuccess.style);
-    }
+        }
+
         if (!inputMail.val().match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/)) {
             inputMail.after(returnTextError('Email'));
             inputMail.css(styleFail.element, styleFail.style);
@@ -154,16 +152,16 @@
     }
 
 
-    let closePopup = document.getElementsByClassName('popupBtn')[0];
-    closePopup.onclick = function () {
+        let closePopup = document.getElementsByClassName('popupBtn')[0];
+        closePopup.onclick = function () {
         document.getElementsByClassName('popupSuccessMenu')[0].style.display = 'none';
         document.getElementById('myForm').reset();
         redirectToLogin();
     }
 
         let registrationBtn = document.querySelector('.main-span');
-    function redirectToLogin() {
 
+        function redirectToLogin() {
         document.getElementsByClassName('main-title')[0].innerText = 'Log in to the system';
         document.getElementById('inputFullName').remove();
         document.getElementById('mailInput').remove();
@@ -171,6 +169,7 @@
         document.getElementsByClassName('checkLabel')[0].remove();
         submitBtn.innerText = 'Sign In';
         registrationBtn.textContent = 'Registration';
+        registrationBtn.style.cursor = 'pointer';
         registrationBtn.style.textAlign = 'center';
         btnHaveAccount.removeEventListener('click', redirectToLogin)
         btnHaveAccount.onclick = () => {location.reload();}
@@ -195,6 +194,7 @@
         } else {
             inputUserName.css(styleSuccess.element, styleSuccess.style);
         }
+
         if (!inputPassword.val().match(/(?=.*[А-ЯA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
             inputPassword.after(returnTextError('Пароль'));
             inputPassword.css(styleFail.element, styleFail.style);
@@ -202,8 +202,8 @@
         } else {
             inputPassword.css(styleSuccess.element, styleSuccess.style);
         }
-        if(!hasError) {
 
+        if(!hasError) {
             let clientsArray = localStorage.getItem('clients')
                 clientsArray = JSON.parse(clientsArray);
            let userName = inputUserName.val();
@@ -257,7 +257,6 @@
     }
 
 
-//Пункт 6
 
     let btnHaveAccount = document.getElementsByClassName('main-span')[0];
     btnHaveAccount.addEventListener('click', redirectToLogin);
